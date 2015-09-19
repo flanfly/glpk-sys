@@ -5,5 +5,14 @@ authors = ["seu <seu@panopticon.re>"]
 links = "glpk"
 build = "src/build.rs"
 
+description = "GLPK bindings for Rust."
+repository = "https://github.com/flanfly/glpk-sys.git"
+
+readme = "README.md"
+
+keywords = ["glpk", "linear programming"]
+
+license = "GPL3"
+
 [dependencies]
 libc = "*"

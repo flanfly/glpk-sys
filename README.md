@@ -1,4 +1,4 @@
 glpk-sys
 ========
 
-Rust bindings for GLPK.
+GLPK bindings for Rust.
