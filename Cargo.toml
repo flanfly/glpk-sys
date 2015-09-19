@@ -1,0 +1,9 @@
+[package]
+name = "glpk-sys"
+version = "0.1.0"
+authors = ["seu <seu@panopticon.re>"]
+links = "glpk"
+build = "src/build.rs"
+
+[dependencies]
+libc = "*"
