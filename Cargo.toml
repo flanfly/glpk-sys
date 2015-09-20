@@ -15,4 +15,4 @@ keywords = ["glpk", "linear programming"]
 license = "GPL3"
 
 [dependencies]
-libc = "*"
+libc = "0.1"
