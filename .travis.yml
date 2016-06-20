@@ -4,7 +4,6 @@ rust:
 addons:
   apt:
     packages:
-      - pkg-config
       - libglpk-dev
 script: |
    cargo build --verbose &&
