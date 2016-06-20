@@ -1,16 +1,17 @@
 language: rust
 matrix:
   include:
+    - os: osx
+      rust: stable
+      env: TARGET=x86_64-apple-darwin
     - os: linux
       dist: trusty
-    - os: osx
-      osx_image: xcode7.3
-rust:
-   - stable
-addons:
-  apt:
-    packages:
-      - libglpk-dev
+      rust: stable
+      env: TARGET=x86_64-unknown-linux-gnu
+      addons:
+        apt:
+          packages:
+            - libglpk-dev
 before install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install glpk; fi
