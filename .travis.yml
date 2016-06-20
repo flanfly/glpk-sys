@@ -1,0 +1,12 @@
+language: rust
+rust:
+   - stable
+addons:
+  apt:
+    packages:
+      - pkg-config
+      - libglpk-dev
+script: |
+   cargo build --verbose &&
+   cargo test --verbose &&
+   cargo run --example main
