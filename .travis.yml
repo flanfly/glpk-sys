@@ -16,6 +16,8 @@ matrix:
           packages:
             - libglpk-dev
 script: |
+  brew update &&
+  brew install glpk &&
   brew --prefix glpk &&
   find /usr/local &&
   cargo build --verbose &&
