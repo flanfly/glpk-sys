@@ -4,6 +4,9 @@ matrix:
     - os: osx
       rust: stable
       env: TARGET=x86_64-apple-darwin
+      before install:
+        brew update
+        brew install glpk
     - os: linux
       dist: trusty
       rust: stable
@@ -12,9 +15,6 @@ matrix:
         apt:
           packages:
             - libglpk-dev
-before install:
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install glpk; fi
 script: |
   brew --prefix glpk &&
   find /usr/local &&
