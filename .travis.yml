@@ -19,7 +19,6 @@ script: |
   brew update &&
   brew install homebrew/science/glpk &&
   brew --prefix homebrew/science/glpk &&
-  find /usr/local &&
   cargo build --verbose &&
   cargo test --verbose &&
   cargo run --example main

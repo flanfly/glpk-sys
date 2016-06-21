@@ -4,7 +4,7 @@ fn main() {
     // for brew
     if cfg!(target_os = "macos") {
         let maybe_brew_prfx = Command::new("brew")
-            .args(&vec!["--prefix","glpk"])
+            .args(&vec!["--prefix","homebrew/science/glpk"])
             .output().ok().and_then(|x| { String::from_utf8(x.stdout).ok() });
 
         match maybe_brew_prfx {
