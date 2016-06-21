@@ -16,6 +16,8 @@ matrix:
           packages:
             - libglpk-dev
 script: |
+   brew update &&
+   brew install homebrew/science/glpk &&
    cargo build --verbose &&
    cargo test --verbose &&
    cargo run --example main
