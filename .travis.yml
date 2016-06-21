@@ -6,7 +6,7 @@ matrix:
       env: TARGET=x86_64-apple-darwin
       before install:
         brew update
-        brew install glpk
+        brew install homebrew/science/glpk
     - os: linux
       dist: trusty
       rust: stable
@@ -17,8 +17,8 @@ matrix:
             - libglpk-dev
 script: |
   brew update &&
-  brew install glpk &&
-  brew --prefix glpk &&
+  brew install homebrew/science/glpk &&
+  brew --prefix homebrew/science/glpk &&
   find /usr/local &&
   cargo build --verbose &&
   cargo test --verbose &&
