@@ -12,10 +12,9 @@ addons:
   apt:
     packages:
       - libglpk-dev
-before install:
-  - brew update
-  - brew install homebrew/science/glpk
-
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install homebrew/science/glpk; fi
 script: |
    cargo build --verbose &&
    cargo test --verbose &&
