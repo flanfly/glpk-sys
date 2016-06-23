@@ -4,20 +4,19 @@ matrix:
     - os: osx
       rust: stable
       env: TARGET=x86_64-apple-darwin
-      before install:
-        - brew update
-        - brew install homebrew/science/glpk
     - os: linux
       dist: trusty
       rust: stable
       env: TARGET=x86_64-unknown-linux-gnu
-      addons:
-        apt:
-          packages:
-            - libglpk-dev
+addons:
+  apt:
+    packages:
+      - libglpk-dev
+before install:
+  - brew update
+  - brew install homebrew/science/glpk
+
 script: |
-   brew update &&
-   brew install homebrew/science/glpk &&
    cargo build --verbose &&
    cargo test --verbose &&
    cargo run --example main
