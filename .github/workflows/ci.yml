@@ -1,0 +1,49 @@
+name: ci
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-and-test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup toolchain install stable --profile minimal
+      - uses: Swatinem/rust-cache@v2
+        with:
+          key: "${{ matrix.os }}"
+
+      - name: install glpk
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libglpk-dev
+
+      - name: install glpk
+        if: runner.os == 'macOS'
+        run: brew install glpk
+
+      - name: install glpk
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          & "$env:VCPKG_INSTALLATION_ROOT\vcpkg.exe" install glpk --triplet x64-windows
+          "VCPKG_ROOT=$env:VCPKG_INSTALLATION_ROOT" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "GLPK_DYNAMIC=1" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "LIBCLANG_PATH=C:\Program Files\LLVM\bin" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "$env:VCPKG_INSTALLATION_ROOT\installed\x64-windows\bin" | Out-File -FilePath $env:GITHUB_PATH -Append -Encoding utf8
+
+      - name: build
+        run: cargo build --verbose
+
+      - name: tests
+        run: cargo test --verbose
