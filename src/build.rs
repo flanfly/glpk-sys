@@ -28,6 +28,16 @@ fn deps() -> Vec<String> {
             .collect();
     }
 
+    // for win
+    #[cfg(target_env = "msvc")]
+    if let Ok(lib) = vcpkg::find_package("glpk") {
+        return lib
+            .include_paths
+            .iter()
+            .map(|p| p.to_string_lossy().to_string())
+            .collect();
+    }
+
     // for brew
     if cfg!(target_os = "macos") {
         let maybe_brew_prfx = Command::new("brew")

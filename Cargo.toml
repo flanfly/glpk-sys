@@ -18,3 +18,4 @@ license = "GPL-3.0-or-later"
 [build-dependencies]
 pkg-config = "0.3"
 bindgen = "0.73"
+vcpkg = "0.2"
