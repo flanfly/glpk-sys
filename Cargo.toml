@@ -1,4 +1,5 @@
 [package]
+edition = "2024"
 name = "glpk-sys"
 version = "0.2.0"
 authors = ["seu <seu@panopticon.re>"]
@@ -14,5 +15,6 @@ keywords = ["glpk", "linear", "integer"]
 
 license = "GPL-3.0"
 
-[dependencies]
-libc = "0.1"
+[build-dependencies]
+pkg-config = "0.3"
+bindgen = "0.73"
