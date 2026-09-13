@@ -1,0 +1,38 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+  pull_request:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - run: rustup toolchain install stable --profile minimal
+      - run: sudo apt-get update && sudo apt-get install -y libglpk-dev
+
+      - name: verify tag matches crate version
+        if: github.event_name == 'push'
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          VERSION="$(cargo metadata --no-deps --format-version=1 \
+            | jq -r '.packages[] | select(.name == "glpk-sys") | .version')"
+          if [ "$TAG" != "$VERSION" ]; then
+            echo "::error::tag ${GITHUB_REF_NAME} does not match crate version ${VERSION}"
+            exit 1
+          fi
+          echo "tag ${GITHUB_REF_NAME} matches crate version ${VERSION}"
+
+      - name: publish to crates.io (dry-run)
+        if: ${{ github.event_name == 'pull_request' && !github.event.pull_request.head.repo.fork }}
+        run: |
+          # validate token
+          cargo login ${{ secrets.CRATES_TOKEN }}
+          cargo publish --dry-run
+
+      - name: publish to crates.io (real)
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+        run: cargo publish --token ${{ secrets.CRATES_TOKEN }}
